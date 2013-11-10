@@ -178,6 +178,25 @@
     self.circularProgressLayer.progress = pinnedProgress;
 }
 
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated duration:(NSInteger)duration timingfunction:(NSString *)timingFunction
+{
+    [self.layer removeAnimationForKey:@"indeterminateAnimation"];
+    [self.circularProgressLayer removeAnimationForKey:@"progress"];
+    
+    CGFloat pinnedProgress = MIN(MAX(progress, 0.0f), 1.0f);
+    if (animated) {
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"progress"];
+        animation.duration = duration; // Same duration as UIProgressView animation
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:timingFunction];
+        animation.fromValue = [NSNumber numberWithFloat:self.progress];
+        animation.toValue = [NSNumber numberWithFloat:pinnedProgress];
+        [self.circularProgressLayer addAnimation:animation forKey:@"progress"];
+    } else {
+        [self.circularProgressLayer setNeedsDisplay];
+    }
+    self.circularProgressLayer.progress = pinnedProgress;
+}
+
 #pragma mark - UIAppearance methods
 
 - (UIColor *)trackTintColor

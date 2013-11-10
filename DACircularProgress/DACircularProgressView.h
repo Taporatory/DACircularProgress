@@ -20,5 +20,6 @@
 @property(nonatomic) NSInteger indeterminate UI_APPEARANCE_SELECTOR; // Can not use BOOL with UI_APPEARANCE_SELECTOR :-(
 
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated;
+- (void)setProgress:(CGFloat)progress animated:(BOOL)animated duration:(NSInteger)duration timingfunction:(NSString *)timingFunction;
 
 @end
